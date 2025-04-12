@@ -108,13 +108,46 @@ function showPopup(event, title, description) {
   const content = document.getElementById("popup-content");
   content.innerHTML = `<strong>${title}</strong><br>${description}`;
   popup.style.display = "block";
-  popup.style.left = (event.pageX + 10) + "px";
-  popup.style.top = (event.pageY + 10) + "px";
+
+  // Disable zoom and pan by removing the zoom behavior.
+  svg.on(".zoom", null);
+
+  // Calculate the popup position.
+  let left = event.pageX + 10;
+  let top = event.pageY + 10;
+
+  // Get the bounding box dimensions.
+  const boundingBox = {
+    xMin: 0,
+    xMax: window.innerWidth,
+    yMin: 0,
+    yMax: window.innerHeight
+  };
+
+  // Get the popup dimensions.
+  const popupWidth = popup.offsetWidth;
+  const popupHeight = popup.offsetHeight;
+
+  // Adjust the position to keep the popup inside the bounding box.
+  if (left + popupWidth > boundingBox.xMax) {
+    left = boundingBox.xMax - popupWidth - 10; // Adjust to fit within the right edge.
+  }
+  if (top + popupHeight > boundingBox.yMax) {
+    top = boundingBox.yMax - popupHeight - 10; // Adjust to fit within the bottom edge.
+  }
+
+  // Apply the adjusted position.
+  popup.style.left = `${left}px`;
+  popup.style.top = `${top}px`;
 }
 
 // Function to close the pop-up box.
 window.closePopup = function closePopup() {
-  document.getElementById("popup").style.display = "none";
+  const popup = document.getElementById("popup");
+  popup.style.display = "none";
+
+  // Re-enable zoom and pan by reapplying the zoom behavior.
+  svg.call(zoomBehavior);
 };
 
 // Function to update the tree layout and zoom on window resize.
