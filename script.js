@@ -84,6 +84,7 @@ function drawPolyphyleticGroups(groups, root) {
 
     return {
       name: group.name,
+      members: nodes, // Store the member nodes for interaction
       xMin: xExtent[0],
       xMax: xExtent[1],
       yMin: yExtent[0],
@@ -94,7 +95,7 @@ function drawPolyphyleticGroups(groups, root) {
   const groupG = g.append("g").attr("class", "polyphyletic-groups");
 
   // Draw translucent bubbles around the group members.
-  groupG.selectAll(".group-bubble")
+  const bubbles = groupG.selectAll(".group-bubble")
     .data(groupData)
     .enter()
     .append("ellipse")
@@ -103,11 +104,11 @@ function drawPolyphyleticGroups(groups, root) {
     .attr("cy", d => (d.xMin + d.xMax) / 2)
     .attr("rx", d => (d.yMax - d.yMin) / 2 + 20) // Add padding
     .attr("ry", d => (d.xMax - d.xMin) / 2 + 20) // Add padding
-    .attr("fill", "green")
+    .attr("fill", "lightgray") // Default color is light gray
     .attr("opacity", 0.2);
 
   // Add group labels to the right of the members, vertically centered.
-  groupG.selectAll(".group-label")
+  const labels = groupG.selectAll(".group-label")
     .data(groupData)
     .enter()
     .append("text")
@@ -118,8 +119,37 @@ function drawPolyphyleticGroups(groups, root) {
     .text(d => d.name)
     .style("font-size", "16px")
     .style("font-weight", "bold")
-    .style("fill", "green") // Match the translucent bubble color.
+    .style("fill", "lightgray") // Default color is light gray
     .style("opacity", 0.6); // Slightly translucent text.
+
+  // Add hover and click behavior for bubbles, labels, and leaf nodes.
+  groupData.forEach(group => {
+    const bubble = bubbles.filter(d => d.name === group.name);
+    const label = labels.filter(d => d.name === group.name);
+    const memberNodes = g.selectAll(".node").filter(d => group.members.includes(d));
+
+    // Function to highlight the bubble and label.
+    const highlightGroup = () => {
+      bubble.style("fill", "green").style("opacity", 0.6);
+      label.style("fill", "green").style("opacity", 1);
+    };
+
+    // Function to reset the bubble and label.
+    const resetGroup = () => {
+      bubble.style("fill", "lightgray").style("opacity", 0.2);
+      label.style("fill", "lightgray").style("opacity", 0.6);
+    };
+
+    // Add hover behavior to the bubble and label.
+    bubble.on("mouseover", highlightGroup).on("mouseout", resetGroup);
+    label.on("mouseover", highlightGroup).on("mouseout", resetGroup);
+
+    // Add hover and click behavior to the member nodes.
+    memberNodes
+      .on("mouseover", highlightGroup)
+      .on("mouseout", resetGroup)
+      .on("click", highlightGroup); // Keep the group highlighted on click.
+  });
 }
 
 // Call the function to draw polyphyletic groups.
