@@ -122,7 +122,7 @@ function drawPolyphyleticGroups(groups, root) {
     .style("fill", "lightgray") // Default color is light gray
     .style("opacity", 0.6); // Slightly translucent text.
 
-  // Add hover and click behavior for bubbles, labels, and leaf nodes.
+  // Add hover and click behavior for bubbles and labels.
   groupData.forEach(group => {
     const bubble = bubbles.filter(d => d.name === group.name);
     const label = labels.filter(d => d.name === group.name);
@@ -136,19 +136,27 @@ function drawPolyphyleticGroups(groups, root) {
 
     // Function to reset the bubble and label.
     const resetGroup = () => {
-      bubble.style("fill", "lightgray").style("opacity", 0.2);
-      label.style("fill", "lightgray").style("opacity", 0.6);
+      g.selectAll(".group-bubble")
+        .style("fill", "lightgray")
+        .style("opacity", 0.2);
+
+      g.selectAll(".group-label")
+        .style("fill", "lightgray")
+        .style("opacity", 0.6);
     };
 
     // Add hover behavior to the bubble and label.
     bubble.on("mouseover", highlightGroup).on("mouseout", resetGroup);
     label.on("mouseover", highlightGroup).on("mouseout", resetGroup);
 
-    // Add hover and click behavior to the member nodes.
+    // Ensure member nodes retain their click behavior for popups.
     memberNodes
       .on("mouseover", highlightGroup)
       .on("mouseout", resetGroup)
-      .on("click", highlightGroup); // Keep the group highlighted on click.
+      .on("click", (event, d) => {
+        event.stopPropagation();
+        showPopup(event, d.data.name, d.data.description); // Ensure popup opens on click.
+      });
   });
 }
 
@@ -221,6 +229,19 @@ function showPopup(event, title, description) {
   // Apply the adjusted position.
   popup.style.left = `${left}px`;
   popup.style.top = `${top}px`;
+
+  // Highlight the bubble and label for all groups the plant belongs to.
+  const groups = treeData.polyphyleticGroups.filter(group =>
+    group.members.includes(title)
+  );
+
+  groups.forEach(group => {
+    const bubble = g.selectAll(".group-bubble").filter(d => d.name === group.name);
+    const label = g.selectAll(".group-label").filter(d => d.name === group.name);
+
+    bubble.style("fill", "green").style("opacity", 0.6);
+    label.style("fill", "green").style("opacity", 1);
+  });
 }
 
 // Function to close the pop-up box.
@@ -230,6 +251,9 @@ window.closePopup = function closePopup() {
 
   // Re-enable zoom and pan by reapplying the zoom behavior.
   svg.call(zoomBehavior);
+
+  // Reset group highlights.
+  resetGroup();
 };
 
 // Function to update the tree layout and zoom on window resize.
