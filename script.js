@@ -30,10 +30,10 @@ const xExtent = d3.extent(root.descendants(), d => d.x);
 const yExtent = d3.extent(root.descendants(), d => d.y);
 
 const boundingBox = {
-  xMin: yExtent[0] - treeScale,
+  xMin: yExtent[0] - treeScale/2,
   xMax: yExtent[1] + 2*treeScale, // Extra padding for labels on right.
-  yMin: xExtent[0] - treeScale,
-  yMax: xExtent[1] + treeScale
+  yMin: xExtent[0] - treeScale/2,
+  yMax: xExtent[1] + treeScale/2
 };
 
 // Draw links (branches) between nodes.
@@ -134,6 +134,12 @@ const zoomBehavior = d3.zoom()
   ])
   .on("zoom", (event) => {
     g.attr("transform", event.transform);
+
+    // Update the zoom level in the cursor position div.
+    const zoomLevel = event.transform.k.toFixed(2); // Get the zoom level from the transform.
+    const currentText = d3.select("#cursor-position").text();
+    const updatedText = currentText.replace(/zoom: \d+(\.\d+)?/, `zoom: ${zoomLevel}`);
+    d3.select("#cursor-position").text(updatedText);
   });
 
 // Apply zoom behavior to the SVG.
@@ -151,6 +157,7 @@ const initialTransform = d3.zoomIdentity
   )
   .scale(initialScale);
 
+// Apply the initial zoom transform to the SVG.
 svg.call(zoomBehavior.transform, initialTransform);
 
 // Function to show the custom pop-up box.
