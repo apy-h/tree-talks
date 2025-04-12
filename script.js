@@ -25,6 +25,30 @@ const maxDepth = Math.max(...root.descendants().map(d => d.depth));
 root.descendants().forEach(d => d.y = d.depth * treeScale);
 root.leaves().forEach(d => d.y = maxDepth * treeScale);
 
+// Calculate the total number of leaf nodes.
+const leafNodes = root.leaves();
+const totalLeafNodes = leafNodes.length;
+
+// Calculate the vertical spacing for leaf nodes.
+const verticalSpacing = height / totalLeafNodes;
+
+// Assign vertical positions to leaf nodes.
+leafNodes.forEach((d, i) => {
+  d.x = i * verticalSpacing; // Space leaf nodes equally
+});
+
+// Recalculate positions for all nodes to ensure proper alignment.
+root.descendants().forEach(d => {
+  if (!d.children) {
+    // Leaf nodes already positioned
+    return;
+  }
+
+  // For internal nodes, position them based on the average position of their children.
+  const childPositions = d.children.map(child => child.x);
+  d.x = d3.mean(childPositions);
+});
+
 // Calculate the bounding box of the tree.
 const xExtent = d3.extent(root.descendants(), d => d.x);
 const yExtent = d3.extent(root.descendants(), d => d.y);
@@ -35,6 +59,10 @@ const boundingBox = {
   yMin: xExtent[0] - treeScale/2,
   yMax: xExtent[1] + treeScale/2
 };
+
+// Set the SVG height to fit the entire tree.
+const treeHeight = totalLeafNodes * verticalSpacing;
+svg.attr("height", Math.max(treeHeight, height)); // Ensure the SVG is tall enough
 
 // Draw links (branches) between nodes.
 g.selectAll(".link")
@@ -168,7 +196,7 @@ const zoomBehavior = d3.zoom()
   .scaleExtent([0.5, 3]) // Allow zooming in as far as 3x but not zooming out beyond the bounding box.
   .translateExtent([
     [boundingBox.xMin, boundingBox.yMin],
-    [boundingBox.xMax, boundingBox.yMax]
+    [boundingBox.xMax, Math.max(boundingBox.yMax, treeHeight)]
   ])
   .on("zoom", (event) => {
     g.attr("transform", event.transform);
