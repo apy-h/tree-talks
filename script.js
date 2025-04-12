@@ -157,19 +157,13 @@ drawPolyphyleticGroups(treeData.polyphyleticGroups, root);
 
 // Define zoom behavior with translateExtent to restrict panning.
 const zoomBehavior = d3.zoom()
-  .scaleExtent([1, 3]) // Allow zooming in as far as 3x but not zooming out beyond the bounding box.
+  .scaleExtent([0.5, 3]) // Allow zooming in as far as 3x but not zooming out beyond the bounding box.
   .translateExtent([
     [boundingBox.xMin, boundingBox.yMin],
     [boundingBox.xMax, boundingBox.yMax]
   ])
   .on("zoom", (event) => {
     g.attr("transform", event.transform);
-
-    // Update the zoom level in the cursor position div.
-    const zoomLevel = event.transform.k.toFixed(2); // Get the zoom level from the transform.
-    const currentText = d3.select("#cursor-position").text();
-    const updatedText = currentText.replace(/zoom: \d+(\.\d+)?/, `zoom: ${zoomLevel}`);
-    d3.select("#cursor-position").text(updatedText);
   });
 
 // Apply zoom behavior to the SVG.
@@ -251,18 +245,21 @@ function updateLayout() {
   const xExtent = d3.extent(root.descendants(), d => d.x);
   const yExtent = d3.extent(root.descendants(), d => d.y);
 
-  const boundingBox = {
+  const newBoundingBox = {
     xMin: yExtent[0] - treeScale,
-    xMax: yExtent[1] + treeScale + 50, // Extra padding for labels on right.
+    xMax: yExtent[1] + 2 * treeScale, // Extra padding for labels on right.
     yMin: xExtent[0] - treeScale,
     yMax: xExtent[1] + treeScale
   };
 
   // Update zoom behavior with the new bounding box.
   zoomBehavior.translateExtent([
-    [boundingBox.xMin, boundingBox.yMin],
-    [boundingBox.xMax, boundingBox.yMax]
+    [newBoundingBox.xMin, newBoundingBox.yMin],
+    [newBoundingBox.xMax, newBoundingBox.yMax]
   ]);
+
+  // Reapply the zoom behavior to the SVG.
+  svg.call(zoomBehavior);
 
   // Preserve the current zoom transform.
   const currentTransform = d3.zoomTransform(svg.node());
