@@ -113,9 +113,9 @@ function showPopup(event, title, description) {
 }
 
 // Function to close the pop-up box.
-function closePopup() {
+window.closePopup = function closePopup() {
   document.getElementById("popup").style.display = "none";
-}
+};
 
 // Function to update the tree layout and zoom on window resize.
 function updateLayout() {
