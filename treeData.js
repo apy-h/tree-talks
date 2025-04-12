@@ -65,15 +65,60 @@ export const treeData = {
                           children: []
                         },
                         {
-                          name: "Green Algae",
+                          name: "Viridoplantae",
                           description: "",
                           traits: [],
                           children: [
                             {
-                              name: "Other",
+                              name: "Chlorophytes",
                               description: "",
                               traits: [],
-                              children: [],
+                              children: []
+                            },
+                            {
+                              name: "Streptophytes",
+                              description: "",
+                              traits: [],
+                              children: [
+                                {
+                                  name: "Chara & Nitella",
+                                  description: "",
+                                  traits: [],
+                                  children: []
+                                },
+                                {
+                                  name: "Branch",
+                                  description: "",
+                                  traits: [],
+                                  children: [
+                                    {
+                                      name: "Coleochaete",
+                                      description: "",
+                                      traits: [],
+                                      children: []
+                                    },
+                                    {
+                                      name: "Branch",
+                                      description: "",
+                                      traits: [],
+                                      children: [
+                                        {
+                                          name: "Zygnemetales",
+                                          description: "",
+                                          traits: [],
+                                          children: []
+                                        },
+                                        {
+                                          name: "Land Plants",
+                                          description: "",
+                                          traits: [],
+                                          children: []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
                             }
                           ]
                         }
