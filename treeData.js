@@ -10,7 +10,7 @@ export const treeData = {
       children: []
     },
     {
-      name: "Branch",
+      name: "",
       description: "",
       traits: [],
       children: [
@@ -54,7 +54,7 @@ export const treeData = {
                       children: []
                     },
                     {
-                      name: "Branch",
+                      name: "",
                       description: "",
                       traits: [],
                       children: [
@@ -87,7 +87,7 @@ export const treeData = {
                                   children: []
                                 },
                                 {
-                                  name: "Branch",
+                                  name: "",
                                   description: "",
                                   traits: [],
                                   children: [
@@ -98,7 +98,7 @@ export const treeData = {
                                       children: []
                                     },
                                     {
-                                      name: "Branch",
+                                      name: "",
                                       description: "",
                                       traits: [],
                                       children: [

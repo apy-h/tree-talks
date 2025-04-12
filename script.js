@@ -60,8 +60,9 @@ const node = g.selectAll(".node")
     showPopup(event, d.data.name, d.data.description);
   });
 
-// Append circles for nodes.
+// Append circles for nodes, skipping nodes named "Branch".
 node.append("circle")
+  .filter(d => d.data.name !== "") // Skip nodes with the name "Branch".
   .attr("r", 6)
   .attr("fill", "#69b3a2");
 
