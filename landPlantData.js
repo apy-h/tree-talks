@@ -15,16 +15,23 @@ export const treeData = {
             children: []
           },
           {
-            name: "Liverworts",
+            name: "",
             description: "",
             traits: [],
-            children: []
-          },
-          {
-            name: "Mosses",
-            description: "",
-            traits: [],
-            children: []
+            children: [
+              {
+                name: "Liverworts",
+                description: "",
+                traits: [],
+                children: []
+              },
+              {
+                name: "Mosses",
+                description: "",
+                traits: [],
+                children: []
+              }
+            ]
           }
         ]
       },
@@ -45,21 +52,34 @@ export const treeData = {
                 children: []
               },
               {
-                name: "Selaginella",
+                name: "",
                 description: "",
                 traits: [],
                 children: [
                   {
-                    name: "Isoetes",
+                    name: "Selaginella",
                     description: "",
                     traits: [],
                     children: []
                   },
                   {
-                    name: "Tree-sized Lycophytes",
-                    description: "Extinct",
+                    name: "",
+                    description: "",
                     traits: [],
-                    children: []
+                    children: [
+                      {
+                        name: "Isoetes",
+                        description: "",
+                        traits: [],
+                        children: []
+                      },
+                      {
+                        name: "Tree-sized Lycophytes",
+                        description: "",
+                        traits: [],
+                        children: []
+                      }
+                    ]
                   }
                 ]
               }

@@ -1,4 +1,4 @@
-import { treeData } from './treeData.js';
+import { treeData } from './ancestralPlantData.js';
 const width = window.innerWidth;
 const height = window.innerHeight;
 
