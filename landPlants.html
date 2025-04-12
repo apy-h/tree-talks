@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Land Plants Tree</title>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script type="module" src="script.js" defer></script>
+</head>
+<body>
+  <button id="backButton" style="margin: 10px;">Back to Main Tree</button>
+  <script>
+    // Load the tree data for Land Plants.
+    const landPlantsData = {
+      name: "Land Plants (Embryophytes)",
+      description: "",
+      traits: [],
+      children: [
+        {
+          name: "Bryophytes",
+          description: "",
+          traits: [],
+          children: [
+            {
+              name: "Hornworts",
+              description: "",
+              traits: [],
+              children: []
+            },
+            {
+              name: "Liverworts",
+              description: "",
+              traits: [],
+              children: []
+            },
+            {
+              name: "Mosses",
+              description: "",
+              traits: [],
+              children: []
+            }
+          ]
+        },
+        {
+          name: "Vascular Plants",
+          description: "",
+          traits: [],
+          children: [
+            {
+              name: "Lycophytes",
+              description: "",
+              traits: [],
+              children: [
+                {
+                  name: "Lycopodium",
+                  description: "",
+                  traits: [],
+                  children: []
+                },
+                {
+                  name: "Selaginella",
+                  description: "",
+                  traits: [],
+                  children: [
+                    {
+                      name: "Isoetes",
+                      description: "",
+                      traits: [],
+                      children: []
+                    },
+                    {
+                      name: "Tree-sized Lycophytes",
+                      description: "Extinct",
+                      traits: [],
+                      children: []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+
+    // Render the tree for Land Plants.
+    renderTree(landPlantsData);
+
+    // Add functionality to the back button.
+    document.getElementById("backButton").addEventListener("click", () => {
+      window.location.href = "index.html"; // Redirect to the main tree page.
+    });
+  </script>
+</body>
+</html>

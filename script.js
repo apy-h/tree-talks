@@ -89,6 +89,18 @@ const node = g.selectAll(".node")
     showPopup(event, d.data.name, d.data.description);
   });
 
+// Add click behavior to nodes.
+node.on("click", (event, d) => {
+  event.stopPropagation();
+  if (d.data.name === "Land Plants (Embryophytes)") {
+    // Redirect to the Land Plants page.
+    window.location.href = "landPlants.html";
+  } else {
+    // Show popup for other nodes.
+    showPopup(event, d.data.name, d.data.description);
+  }
+});
+
 // Append circles for nodes, skipping blanks
 node.append("circle")
   .filter(d => d.data.name !== "")
