@@ -109,10 +109,49 @@ export const treeData = {
                                           children: []
                                         },
                                         {
-                                          name: "Land Plants",
+                                          name: "Land Plants (Embryophytes)",
                                           description: "",
                                           traits: [],
-                                          children: []
+                                          children: [
+                                            {
+                                              name: "Bryophytes",
+                                              description: "",
+                                              traits: [],
+                                              children: [
+                                                {
+                                                  name: "Hornworts",
+                                                  description: "",
+                                                  traits: [],
+                                                  children: []
+                                                },
+                                                {
+                                                  name: "",
+                                                  description: "",
+                                                  traits: [],
+                                                  children: [
+                                                    {
+                                                      name: "Liverworts",
+                                                      description: "",
+                                                      traits: [],
+                                                      children: []
+                                                    },
+                                                    {
+                                                      name: "Mosses",
+                                                      description: "",
+                                                      traits: [],
+                                                      children: []
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            },
+                                            {
+                                              name: "Vascular Plants",
+                                              description: "",
+                                              traits: [],
+                                              children: []
+                                            }
+                                          ]
                                         }
                                       ]
                                     }
