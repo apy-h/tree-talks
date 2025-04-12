@@ -2,20 +2,12 @@ import { treeData } from './treeData.js';
 const width = window.innerWidth;
 const height = window.innerHeight;
 
+const treeScale = 100
+
 // Create the SVG container.
 const svg = d3.select("body").append("svg")
   .attr("width", width)
   .attr("height", height);
-
-// Define zoom behavior with translateExtent to restrict panning.
-const zoomBehavior = d3.zoom()
-  .scaleExtent([0.5, 5])
-  .translateExtent([[-100, -100], [width + 100, height + 100]])
-  .on("zoom", (event) => {
-    g.attr("transform", event.transform);
-  });
-
-svg.call(zoomBehavior);
 
 // Create a group for the tree elements.
 const g = svg.append("g");
@@ -24,13 +16,24 @@ const g = svg.append("g");
 const root = d3.hierarchy(treeData);
 
 // Use a tree layout with increased vertical spacing ([vertical, horizontal]).
-const treeLayout = d3.tree().nodeSize([80, 200]);
+const treeLayout = d3.tree().nodeSize([treeScale, treeScale]);
 treeLayout(root);
 
 // Align leaves at the rightmost position.
 const maxDepth = Math.max(...root.descendants().map(d => d.depth));
-root.descendants().forEach(d => d.y = d.depth * 200);
-root.leaves().forEach(d => d.y = maxDepth * 200);
+root.descendants().forEach(d => d.y = d.depth * treeScale);
+root.leaves().forEach(d => d.y = maxDepth * treeScale);
+
+// Calculate the bounding box of the tree.
+const xExtent = d3.extent(root.descendants(), d => d.x);
+const yExtent = d3.extent(root.descendants(), d => d.y);
+
+const boundingBox = {
+  xMin: yExtent[0] - treeScale,
+  xMax: yExtent[1] + treeScale + 50, // Extra padding for labels on right.
+  yMin: xExtent[0] - treeScale,
+  yMax: xExtent[1] + treeScale
+};
 
 // Draw links (branches) between nodes.
 g.selectAll(".link")
@@ -69,6 +72,34 @@ node.append("text")
   .attr("x", 10)
   .text(d => d.data.name)
   .style("font-size", "14px");
+
+// Define zoom behavior with translateExtent to restrict panning.
+const zoomBehavior = d3.zoom()
+  .scaleExtent([1, 3]) // Allow zooming in as far as 3x but not zooming out beyond the bounding box.
+  .translateExtent([
+    [boundingBox.xMin, boundingBox.yMin],
+    [boundingBox.xMax, boundingBox.yMax]
+  ])
+  .on("zoom", (event) => {
+    g.attr("transform", event.transform);
+  });
+
+// Apply zoom behavior to the SVG.
+svg.call(zoomBehavior);
+
+// Set the initial zoom to fit the entire tree within the viewport.
+const initialScale = Math.min(
+  width / (boundingBox.xMax - boundingBox.xMin),
+  height / (boundingBox.yMax - boundingBox.yMin)
+);
+const initialTransform = d3.zoomIdentity
+  .translate(
+    (width - (boundingBox.xMax + boundingBox.xMin) * initialScale) / 2,
+    (height - (boundingBox.yMax + boundingBox.yMin) * initialScale) / 2
+  )
+  .scale(initialScale);
+
+svg.call(zoomBehavior.transform, initialTransform);
 
 // Function to show the custom pop-up box.
 function showPopup(event, title, description) {

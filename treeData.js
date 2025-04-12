@@ -65,7 +65,7 @@ export const treeData = {
                           children: []
                         },
                         {
-                          name: "Branch",
+                          name: "Green Algae",
                           description: "",
                           traits: [],
                           children: [
