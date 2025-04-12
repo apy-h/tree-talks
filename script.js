@@ -115,3 +115,40 @@ function showPopup(event, title, description) {
 function closePopup() {
   document.getElementById("popup").style.display = "none";
 }
+
+// Function to update the tree layout and zoom on window resize.
+function updateLayout() {
+  // Update width and height based on the new window size.
+  const newWidth = window.innerWidth;
+  const newHeight = window.innerHeight;
+
+  // Update the SVG container size.
+  svg.attr("width", newWidth).attr("height", newHeight);
+
+  // Recalculate the bounding box.
+  const xExtent = d3.extent(root.descendants(), d => d.x);
+  const yExtent = d3.extent(root.descendants(), d => d.y);
+
+  const boundingBox = {
+    xMin: yExtent[0] - treeScale,
+    xMax: yExtent[1] + treeScale + 50, // Extra padding for labels on right.
+    yMin: xExtent[0] - treeScale,
+    yMax: xExtent[1] + treeScale
+  };
+
+  // Update zoom behavior with the new bounding box.
+  zoomBehavior.translateExtent([
+    [boundingBox.xMin, boundingBox.yMin],
+    [boundingBox.xMax, boundingBox.yMax]
+  ]);
+
+  // Preserve the current zoom transform.
+  const currentTransform = d3.zoomTransform(svg.node());
+  svg.call(zoomBehavior.transform, currentTransform);
+}
+
+// Add an event listener to handle window resize.
+window.addEventListener("resize", updateLayout);
+
+// Initial call to set up the layout.
+updateLayout();
