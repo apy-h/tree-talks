@@ -2,7 +2,8 @@ import { treeData } from './treeData.js';
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-const treeScale = 100
+const treeScale = 125
+const popupPadding = 10
 
 // Create the SVG container.
 const svg = d3.select("body").append("svg")
@@ -30,7 +31,7 @@ const yExtent = d3.extent(root.descendants(), d => d.y);
 
 const boundingBox = {
   xMin: yExtent[0] - treeScale,
-  xMax: yExtent[1] + treeScale + 50, // Extra padding for labels on right.
+  xMax: yExtent[1] + 2*treeScale, // Extra padding for labels on right.
   yMin: xExtent[0] - treeScale,
   yMax: xExtent[1] + treeScale
 };
@@ -60,9 +61,9 @@ const node = g.selectAll(".node")
     showPopup(event, d.data.name, d.data.description);
   });
 
-// Append circles for nodes, skipping nodes named "Branch".
+// Append circles for nodes, skipping blanks
 node.append("circle")
-  .filter(d => d.data.name !== "") // Skip nodes with the name "Branch".
+  .filter(d => d.data.name !== "")
   .attr("r", 6)
   .attr("fill", "#69b3a2");
 
@@ -73,6 +74,56 @@ node.append("text")
   .attr("x", 10)
   .text(d => d.data.name)
   .style("font-size", "14px");
+
+// Draw polyphyletic groups.
+function drawPolyphyleticGroups(groups, root) {
+  const groupData = groups.map(group => {
+    const nodes = root.descendants().filter(d => group.members.includes(d.data.name));
+    const xExtent = d3.extent(nodes, d => d.x);
+    const yExtent = d3.extent(nodes, d => d.y);
+
+    return {
+      name: group.name,
+      xMin: xExtent[0],
+      xMax: xExtent[1],
+      yMin: yExtent[0],
+      yMax: yExtent[1]
+    };
+  });
+
+  const groupG = g.append("g").attr("class", "polyphyletic-groups");
+
+  // Draw translucent bubbles around the group members.
+  groupG.selectAll(".group-bubble")
+    .data(groupData)
+    .enter()
+    .append("ellipse")
+    .attr("class", "group-bubble")
+    .attr("cx", d => (d.yMin + d.yMax) / 2)
+    .attr("cy", d => (d.xMin + d.xMax) / 2)
+    .attr("rx", d => (d.yMax - d.yMin) / 2 + 20) // Add padding
+    .attr("ry", d => (d.xMax - d.xMin) / 2 + 20) // Add padding
+    .attr("fill", "green")
+    .attr("opacity", 0.2);
+
+  // Add group labels to the right of the members, vertically centered.
+  groupG.selectAll(".group-label")
+    .data(groupData)
+    .enter()
+    .append("text")
+    .attr("class", "group-label")
+    .attr("x", d => d.yMax + treeScale) // Increased horizontal offset to avoid overlap.
+    .attr("y", d => (d.xMin + d.xMax) / 2) // Vertically center about the members.
+    .attr("text-anchor", "start") // Align text to the left.
+    .text(d => d.name)
+    .style("font-size", "16px")
+    .style("font-weight", "bold")
+    .style("fill", "green") // Match the translucent bubble color.
+    .style("opacity", 0.6); // Slightly translucent text.
+}
+
+// Call the function to draw polyphyletic groups.
+drawPolyphyleticGroups(treeData.polyphyleticGroups, root);
 
 // Define zoom behavior with translateExtent to restrict panning.
 const zoomBehavior = d3.zoom()
@@ -113,8 +164,8 @@ function showPopup(event, title, description) {
   svg.on(".zoom", null);
 
   // Calculate the popup position.
-  let left = event.pageX + 10;
-  let top = event.pageY + 10;
+  let left = event.pageX + popupPadding;
+  let top = event.pageY + popupPadding;
 
   // Get the bounding box dimensions.
   const boundingBox = {
@@ -130,10 +181,10 @@ function showPopup(event, title, description) {
 
   // Adjust the position to keep the popup inside the bounding box.
   if (left + popupWidth > boundingBox.xMax) {
-    left = boundingBox.xMax - popupWidth - 10; // Adjust to fit within the right edge.
+    left = boundingBox.xMax - popupWidth - popupPadding; // Adjust to fit within the right edge.
   }
   if (top + popupHeight > boundingBox.yMax) {
-    top = boundingBox.yMax - popupHeight - 10; // Adjust to fit within the bottom edge.
+    top = boundingBox.yMax - popupHeight - popupPadding; // Adjust to fit within the bottom edge.
   }
 
   // Apply the adjusted position.

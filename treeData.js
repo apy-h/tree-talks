@@ -76,7 +76,7 @@ export const treeData = {
                               children: []
                             },
                             {
-                              name: "Streptophytes",
+                              name: "",
                               description: "",
                               traits: [],
                               children: [
@@ -131,6 +131,16 @@ export const treeData = {
           ]
         }
       ]
+    }
+  ],
+  polyphyleticGroups: [
+    {
+      name: "Green Algae",
+      members: ["Chlorophytes", "Chara & Nitella", "Coleochaete", "Zygnemetales"]
+    },
+    {
+      name: "Streptophytes",
+      members: ["Chara & Nitella", "Coleochaete", "Zygnemetales"]
     }
   ]
 };
