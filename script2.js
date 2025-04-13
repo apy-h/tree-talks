@@ -2,7 +2,7 @@ import { treeData } from './landPlantData.js';
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-const treeScale = 125
+const treeScale = 100
 const popupPadding = 10
 
 // Create the SVG container.
@@ -16,10 +16,6 @@ const g = svg.append("g");
 // Create the hierarchy from the tree data.
 const root = d3.hierarchy(treeData);
 
-// Use a tree layout with increased vertical spacing ([vertical, horizontal]).
-const treeLayout = d3.tree().nodeSize([treeScale, treeScale]);
-treeLayout(root);
-
 // Align leaves at the rightmost position.
 const maxDepth = Math.max(...root.descendants().map(d => d.depth));
 root.descendants().forEach(d => d.y = d.depth * treeScale);
@@ -29,18 +25,31 @@ root.leaves().forEach(d => d.y = maxDepth * treeScale);
 const leafNodes = root.leaves();
 const totalLeafNodes = leafNodes.length;
 
-// Calculate the vertical spacing for leaf nodes.
-const verticalSpacing = height / totalLeafNodes;
+// Assign vertical positions to nodes based on the size of their subtree.
+function assignVerticalPositions(node, currentY = { value: 0 }) {
+  if (!node.children || node.children.length === 0) {
+    // Leaf node: assign the current vertical position and increment.
+    node.x = currentY.value;
+    currentY.value += treeScale/3; // Increment for the next leaf.
+  } else {
+    // Internal node: recursively calculate positions for children.
+    node.children.forEach(child => assignVerticalPositions(child, currentY));
+    // Assign the internal node's position as the average of its children's positions.
+    const childPositions = node.children.map(child => child.x);
+    node.x = d3.mean(childPositions);
+  }
+}
 
-// Assign vertical positions to leaf nodes.
-leafNodes.forEach((d, i) => {
-  d.x = i * verticalSpacing; // Space leaf nodes equally
-});
+// Define currentY as an object with a value property.
+const currentY = { value: 0 };
+
+// Start assigning vertical positions from the root.
+assignVerticalPositions(root);
 
 // Recalculate positions for all nodes to ensure proper alignment.
 root.descendants().forEach(d => {
   if (!d.children) {
-    // Leaf nodes already positioned
+    // Leaf nodes already positioned.
     return;
   }
 
@@ -61,7 +70,7 @@ const boundingBox = {
 };
 
 // Set the SVG height to fit the entire tree.
-const treeHeight = totalLeafNodes * verticalSpacing;
+const treeHeight = currentY.value;
 svg.attr("height", Math.max(treeHeight, height)); // Ensure the SVG is tall enough
 
 // Draw links (branches) between nodes.
