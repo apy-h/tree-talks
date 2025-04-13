@@ -12,7 +12,7 @@ export const treeData = {
     {
       name: "",
       description: "",
-      traits: ["Mitochondria"],
+      traits: [],
       children: [
         {
           name: "Archaea",
@@ -28,13 +28,13 @@ export const treeData = {
             {
               name: "Animals",
               description: "",
-              traits: [],
+              traits: ["Diplontic Life Cycle"],
               children: []
             },
             {
               name: "Plants",
               description: "",
-              traits: [],
+              traits: ["Haplontic Life Cycle"],
               children: [
                 {
                   name: "Other",
@@ -61,7 +61,7 @@ export const treeData = {
                         {
                           name: "Red Algae",
                           description: "",
-                          traits: [],
+                          traits: ["Complex Multicellularity"],
                           children: []
                         },
                         {
@@ -78,7 +78,7 @@ export const treeData = {
                             {
                               name: "",
                               description: "",
-                              traits: [],
+                              traits: ["Sporopollenin in Zygote Wall"],
                               children: [
                                 {
                                   name: "Chara & Nitella",
@@ -111,7 +111,7 @@ export const treeData = {
                                         {
                                           name: "Land Plants",
                                           description: "Embryophytes",
-                                          traits: [],
+                                          traits: ["Complex Multicellularity"],
                                           children: []
                                         }
                                       ]
@@ -134,6 +134,10 @@ export const treeData = {
     }
   ],
   polyphyleticGroups: [
+    {
+      name: "Prokaryotes",
+      members: ["Bacteria", "Archaea"]
+    },
     {
       name: "Green Algae",
       members: ["Chlorophytes", "Chara & Nitella", "Coleochaete", "Zygnemetales"]
