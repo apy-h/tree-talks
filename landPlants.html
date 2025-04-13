@@ -12,6 +12,9 @@
     <span class="close-btn" onclick="closePopup()">×</span>
     <p id="popup-content"></p>
   </div>
-  <script type="module" src="script2.js"></script>
+  <script type="module">
+    import { initializeTreeVisualization } from './script.js';
+    initializeTreeVisualization('./landPlantData.js');
+  </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 export const treeData = {
-    name: "Land Plants (Embryophytes)",
-    description: "",
+    name: "Land Plants",
+    description: "Embryophytes",
     traits: [],
     children: [
       {
@@ -36,8 +36,8 @@ export const treeData = {
         ]
       },
       {
-        name: "Vascular Plants (Tracheophytes)",
-        description: "",
+        name: "Vascular Plants",
+        description: "Tracheophytes",
         traits: [],
         children: [
           {
