@@ -2,7 +2,7 @@ import { treeData } from './landPlantData.js';
 const width = window.innerWidth;
 const height = window.innerHeight;
 
-const treeScale = 100
+const treeScale = 125
 const popupPadding = 10
 
 // Create the SVG container.
@@ -344,100 +344,3 @@ window.addEventListener("resize", updateLayout);
 
 // Initial call to set up the layout.
 updateLayout();
-
-// Add a collapsed property to each node in the hierarchy.
-root.descendants().forEach(d => {
-  d.collapsed = false; // Initially, no nodes are collapsed.
-  d.storedChildren = null; // Placeholder for storing children when collapsed.
-});
-
-// Function to toggle collapse/expand on a node.
-function toggleCollapse(node) {
-  if (node.collapsed) {
-    // Expand the node: restore its children.
-    node.children = node.storedChildren;
-    node.storedChildren = null;
-    node.collapsed = false;
-  } else {
-    // Collapse the node: store its children and remove them.
-    node.storedChildren = node.children;
-    node.children = null;
-    node.collapsed = true;
-  }
-}
-
-// Function to update the tree layout after collapsing/expanding.
-function updateTree() {
-  // Recalculate positions for all nodes.
-  assignVerticalPositions(root);
-
-  // Ensure all nodes have valid `y` values.
-  root.descendants().forEach(d => {
-    if (d.y === undefined) {
-      d.y = d.depth * treeScale; // Assign default `y` based on depth.
-    }
-  });
-
-  // Update links (branches).
-  const links = g.selectAll(".link")
-    .data(
-      root.links().filter(d => d.source.children && !d.source.collapsed), // Filter out links for collapsed nodes.
-      d => d.target.data.name
-    );
-
-  links.enter()
-    .append("path")
-    .attr("class", "link")
-    .attr("stroke", "#555")
-    .attr("fill", "none")
-    .attr("stroke-width", 2)
-    .merge(links)
-    .attr("d", d3.linkHorizontal()
-      .x(d => d.source.y) // Ensure source and target positions are defined
-      .y(d => d.source.x)
-      .x(d => d.target.y)
-      .y(d => d.target.x));
-
-  links.exit().remove();
-
-  // Update nodes.
-  const nodes = g.selectAll(".node")
-    .data(root.descendants(), d => d.data.name);
-
-  const nodeEnter = nodes.enter()
-    .append("g")
-    .attr("class", "node")
-    .attr("transform", d => `translate(${d.y},${d.x})`)
-    .on("dblclick", (event, d) => {
-      event.stopPropagation();
-      toggleCollapse(d); // Collapse or expand the node.
-      updateTree(); // Re-render the tree.
-    });
-
-  nodeEnter.append("circle")
-    .attr("r", 6)
-    .attr("fill", d => d.children && !d.collapsed ? "#69b3a2" : "#ccc");
-
-  nodeEnter.append("text")
-    .attr("dy", d => d.children ? -10 : 4)
-    .attr("x", 10)
-    .text(d => d.data.name)
-    .style("font-size", "14px");
-
-  nodes.merge(nodeEnter)
-    .attr("transform", d => `translate(${d.y},${d.x})`);
-
-  nodes.exit().remove();
-}
-
-// Remove popup functionality for internal nodes.
-node.on("click", (event, d) => {
-  if (!d.children) {
-    // Only show popup for leaf nodes.
-    event.stopPropagation();
-    showPopup(event, d.data.name, d.data.description);
-  }
-});
-
-// Initial rendering of the tree.
-updateTree();
