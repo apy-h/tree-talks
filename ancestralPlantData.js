@@ -12,12 +12,12 @@ export const treeData = {
     {
       name: "",
       description: "",
-      traits: [],
+      traits: ["Mitochondria"],
       children: [
         {
           name: "Archaea",
           description: "",
-          traits: ["Mitochondria"],
+          traits: [],
           children: []
         },
         {

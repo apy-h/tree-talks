@@ -101,6 +101,71 @@ export function initializeTreeVisualization(dataSource) {
       .text(d => d.data.name)
       .style("font-size", "14px");
 
+    // Add tick marks for traits on branches
+    function addTraitTicks(root) {
+      const links = root.links();
+    
+      links.forEach(link => {
+        const traits = link.target.data.traits || [];
+        const numTraits = traits.length;
+    
+        if (numTraits > 0) {
+          // Calculate the source and target coordinates of the branch
+          const x0 = link.source.x;
+          const y0 = link.source.y;
+          const x1 = link.target.x;
+          const y1 = link.target.y;
+    
+          // Calculate the angle of the branch
+          const dx = x1 - x0;
+          const dy = y1 - y0;
+          const branchLength = Math.sqrt(dx * dx + dy * dy);
+          const unitX = dx / branchLength; // Unit vector in the x direction
+          const unitY = dy / branchLength; // Unit vector in the y direction
+    
+          // Add a tick mark for each trait
+          traits.forEach((trait, index) => {
+            // Calculate the position of the tick mark along the branch
+            const position = (index + 1) / (numTraits + 1); // Evenly space ticks
+            const tickX = x0 + dx * position;
+            const tickY = y0 + dy * position;
+    
+            // Calculate the perpendicular vector
+            const perpX = -unitY * 5; // Perpendicular vector scaled for tick length
+            const perpY = unitX * 5;
+    
+            // Draw the tick mark
+            g.append("line")
+              .attr("class", "trait-tick")
+              .attr("x1", tickY - perpY)
+              .attr("y1", tickX - perpX)
+              .attr("x2", tickY + perpY)
+              .attr("y2", tickX + perpX)
+              .attr("stroke", "black")
+              .attr("stroke-width", 2);
+    
+            // Add a label for the trait
+            g.append("text")
+              .attr("class", "trait-label")
+              .attr("x", tickY + perpY * 2) // Offset slightly along the perpendicular direction
+              .attr("y", tickX + perpX * 2)
+              .attr("text-anchor", "middle")
+              .text(trait)
+              .style("font-size", "12px")
+              .style("cursor", "pointer")
+              .on("click", (event) => {
+                event.stopPropagation();
+                showPopup(event, trait, `This is a key evolutionary trait: ${trait}`);
+              });
+          });
+        }
+      });
+    }
+    
+
+    // Call the function after the tree is drawn
+    addTraitTicks(root);    
+
     // === POLYPHYLETIC GROUPS ===
     // Draw polyphyletic groups.
     function drawPolyphyleticGroups(groups, root) {
