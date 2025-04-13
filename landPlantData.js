@@ -36,7 +36,7 @@ export const treeData = {
         ]
       },
       {
-        name: "Vascular Plants",
+        name: "Vascular Plants (Tracheophytes)",
         description: "",
         traits: [],
         children: [
@@ -80,6 +80,227 @@ export const treeData = {
                         children: []
                       }
                     ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            name: "",
+            description: "",
+            traits: [],
+            children: [
+              {
+                name: "Monilophytes",
+                description: "",
+                traits: [],
+                children: [
+                  {
+                    name: "Horsetails",
+                    description: "",
+                    traits: [],
+                    children: []
+                  },
+                  {
+                    name: "",
+                    description: "",
+                    traits: [],
+                    children: [
+                      {
+                        name: "Whisk Ferns",
+                        description: "",
+                        traits: [],
+                        children: []
+                      },
+                      {
+                        name: "",
+                        description: "",
+                        traits: [],
+                        children: [
+                          {
+                            name: "Marattioid Ferns",
+                            description: "",
+                            traits: [],
+                            children: []
+                          },
+                          {
+                            name: "",
+                            description: "",
+                            traits: [],
+                            children: [
+                              {
+                                name: "Other Leptosporangiate Ferns",
+                                description: "",
+                                traits: [],
+                                children: []
+                              },
+                              {
+                                name: "",
+                                description: "",
+                                traits: [],
+                                children: [
+                                  {
+                                    name: "Aquatic Ferns",
+                                    description: "",
+                                    traits: [],
+                                    children: []
+                                  },
+                                  {
+                                    name: "",
+                                    description: "",
+                                    traits: [],
+                                    children: [
+                                      {
+                                        name: "Tree Ferns",
+                                        description: "",
+                                        traits: [],
+                                        children: []
+                                      },
+                                      {
+                                        name: "Polypod Ferns",
+                                        description: "",
+                                        traits: [],
+                                        children: []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                name: "",
+                description: "",
+                traits: [],
+                children: [
+                  {
+                    name: "Gymnosperms",
+                    description: "",
+                    traits: "",
+                    children: [
+                      {
+                        name: "Cycads",
+                        description: "",
+                        traits: [],
+                        children: []
+                      },
+                      {
+                        name: "",
+                        description: "",
+                        traits: [],
+                        children: [
+                          {
+                            name: "Ginkgo",
+                            description: "",
+                            traits: [],
+                            children: []
+                          },
+                          {
+                            name: "",
+                            description: "",
+                            traits: [],
+                            children: [
+                              {
+                                name: "Conifers",
+                                description: "",
+                                traits: [],
+                                children: [
+                                  {
+                                    name: "Pinaceae",
+                                    description: "",
+                                    traits: [],
+                                    children: []
+                                  },
+                                  {
+                                    name: "",
+                                    description: "",
+                                    traits: [],
+                                    children: [
+                                      {
+                                        name: "",
+                                        description: "",
+                                        traits: [],
+                                        children: [
+                                          {
+                                            name: "",
+                                            description: "",
+                                            traits: [],
+                                            children: [
+                                              {
+                                                name: "Podocarpaceae",
+                                                description: "",
+                                                traits: [],
+                                                children: []
+                                              },
+                                              {
+                                                name: "Araucariaceae",
+                                                description: "",
+                                                traits: [],
+                                                children: []
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            name: "",
+                                            description: "",
+                                            traits: [],
+                                            children: [
+                                              {
+                                                name: "Taxaceae",
+                                                description: "",
+                                                traits: [],
+                                                children: []
+                                              },
+                                              {
+                                                name: "",
+                                                description: "",
+                                                traits: [],
+                                                children: [
+                                                  {
+                                                    name: "Taxodiaceae",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: []
+                                                  },
+                                                  {
+                                                    name: "Cupressaceae",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: []
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                name: "Gnetales",
+                                description: "",
+                                traits: [],
+                                children: []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    name: "Angiosperms",
+                    description: "",
+                    traits: [],
+                    children: []
                   }
                 ]
               }
