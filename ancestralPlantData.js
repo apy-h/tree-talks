@@ -5,7 +5,7 @@ export const treeData = {
   children: [
     {
       name: "Bacteria",
-      description: "",
+      description: "hello",
       traits: [],
       children: []
     },
@@ -17,7 +17,7 @@ export const treeData = {
         {
           name: "Archaea",
           description: "",
-          traits: [],
+          traits: ["Mitochondria"],
           children: []
         },
         {
