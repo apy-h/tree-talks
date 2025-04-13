@@ -78,7 +78,7 @@ export const treeData = {
                             {
                               name: "",
                               description: "",
-                              traits: ["Sporopollenin in Zygote Wall"],
+                              traits: ["Sporopollenin", "Glycolate Oxidase", "Phragmoplast"],
                               children: [
                                 {
                                   name: "Chara & Nitella",
@@ -111,7 +111,7 @@ export const treeData = {
                                         {
                                           name: "Land Plants",
                                           description: "Embryophytes",
-                                          traits: ["Complex Multicellularity"],
+                                          traits: ["Complex Multicellularity", "Matrophy", "Haplodiplontic Life Cycle"],
                                           children: []
                                         }
                                       ]

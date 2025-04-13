@@ -144,11 +144,20 @@ export function initializeTreeVisualization(dataSource) {
               .attr("stroke", "black")
               .attr("stroke-width", 2);
     
+            // Adjust label placement dynamically to avoid overlap
+            const labelOffset = 15; // Base offset for labels
+            const angle = Math.atan2(dy, dx); // Angle of the branch in radians
+            const labelDistance = labelOffset + index * 5; // Increase distance for each label to avoid overlap
+    
+            // Adjust label position based on the branch angle
+            const labelX = tickY + Math.cos(angle) * labelDistance + perpY * 2;
+            const labelY = tickX + Math.sin(angle) * labelDistance + perpX * 2;
+    
             // Add a label for the trait
             g.append("text")
               .attr("class", "trait-label")
-              .attr("x", tickY + perpY * 2) // Offset slightly along the perpendicular direction
-              .attr("y", tickX + perpX * 2)
+              .attr("x", labelX)
+              .attr("y", labelY)
               .attr("text-anchor", "middle")
               .text(trait)
               .style("font-size", "12px")
@@ -161,7 +170,6 @@ export function initializeTreeVisualization(dataSource) {
         }
       });
     }
-    
 
     // Call the function after the tree is drawn
     addTraitTicks(root);    
