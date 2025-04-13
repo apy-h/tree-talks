@@ -182,7 +182,7 @@ export const treeData = {
                   {
                     name: "Gymnosperms",
                     description: "",
-                    traits: "",
+                    traits: [],
                     children: [
                       {
                         name: "Cycads",
@@ -300,7 +300,228 @@ export const treeData = {
                     name: "Angiosperms",
                     description: "",
                     traits: [],
-                    children: []
+                    children: [
+                      {
+                        name: "Ambroella",
+                        description: "",
+                        traits: [],
+                        children: []
+                      },
+                      {
+                        name: "",
+                        description: "",
+                        traits: [],
+                        children: [
+                          {
+                            name: "Water Lillies",
+                            description: "",
+                            traits: [],
+                            children: []
+                          },
+                          {
+                            name: "",
+                            description: "",
+                            traits: [],
+                            children: [
+                              {
+                                name: "Star Anise",
+                                description: "",
+                                traits: [],
+                                children: []
+                              },
+                              {
+                                name: "",
+                                description: "",
+                                traits: [],
+                                children: [
+                                  {
+                                    name: "Mangoliids",
+                                    description: "",
+                                    traits: [],
+                                    children: []
+                                  },
+                                  {
+                                    name: "",
+                                    description: "",
+                                    traits: [],
+                                    children: [
+                                      {
+                                        name: "Monocots",
+                                        description: "",
+                                        traits: [],
+                                        children: [
+                                          {
+                                            name: "Aquatic and Marshy Plants",
+                                            description: "",
+                                            traits: [],
+                                            children: []
+                                          },
+                                          {
+                                            name: "",
+                                            description: "",
+                                            traits: [],
+                                            children: [
+                                              {
+                                                name: "Yams",
+                                                description: "",
+                                                traits: [],
+                                                children: []
+                                              },
+                                              {
+                                                name: "",
+                                                description: "",
+                                                traits: [],
+                                                children: [
+                                                  {
+                                                    name: "Lilies",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: []
+                                                  },
+                                                  {
+                                                    name: "",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: [
+                                                      {
+                                                        name: "Orchids, Daffodils, Agave, Asparagus",
+                                                        description: "",
+                                                        traits: [],
+                                                        children: []
+                                                      },
+                                                      {
+                                                        name: "",
+                                                        description: "",
+                                                        traits: [],
+                                                        children: [
+                                                          {
+                                                            name: "Palms",
+                                                            description: "",
+                                                            traits: [],
+                                                            children: []
+                                                          },
+                                                          {
+                                                            name: "",
+                                                            description: "",
+                                                            traits: [],
+                                                            children: [
+                                                              {
+                                                                name: "Grasses, Pineapples",
+                                                                description: "",
+                                                                traits: [],
+                                                                children: []
+                                                              },
+                                                              {
+                                                                name: "Gingers, Bananas",
+                                                                description: "",
+                                                                traits: [],
+                                                                children: []
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        name: "Eudicots",
+                                        description: "",
+                                        traits: [],
+                                        children: [
+                                          {
+                                            name: "Buttercups, Poppies",
+                                            description: "",
+                                            traits: [],
+                                            children: []
+                                          },
+                                          {
+                                            name: "",
+                                            description: "",
+                                            traits: [],
+                                            children: [
+                                              {
+                                                name: "",
+                                                description: "",
+                                                traits: [],
+                                                children: [
+                                                  {
+                                                    name: "Grapes",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: []
+                                                  },
+                                                  {
+                                                    name: "",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: [
+                                                      {
+                                                        name: "Apples, Roses, Violets, Legumes, Figs, Oaks, Walnuts, Pumpkins, Willows, Passionflower, Birches",
+                                                        description: "",
+                                                        traits: [],
+                                                        children: []
+                                                      },
+                                                      {
+                                                        name: "Cotton, Chocolate, Eucalyptus, Papaya, Cabbage, Arabidopsis",
+                                                        description: "",
+                                                        traits: [],
+                                                        children: []
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                name: "",
+                                                description: "",
+                                                traits: [],
+                                                children: [
+                                                  {
+                                                    name: "Cacti, Carnations",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: []
+                                                  },
+                                                  {
+                                                    name: "",
+                                                    description: "",
+                                                    traits: [],
+                                                    children: [
+                                                      {
+                                                        name: "Blueberry, Coffee, Tea, Tomatao, Milkweeds, Potato, Tobacco, Mints",
+                                                        description: "",
+                                                        traits: [],
+                                                        children: []
+                                                      },
+                                                      {
+                                                        name: "Sunflower, Carrots, Honeysuckle",
+                                                        description: "",
+                                                        traits: [],
+                                                        children: []
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
